@@ -34,6 +34,23 @@
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
+
+        <p>
+            {{ form.role.label }}<br>
+            {{ form.role() }}<br>
+            {% for error in form.role.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p></p>
+            {{ form.age.label }}<br>
+            {{ form.age() }}<br>
+            {% for error in form.age.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
     </form>
 
 {% endblock %}

@@ -13,12 +13,19 @@ class ProfileForm(FlaskForm):
     lname = StringField('Last Name', validators=[DataRequired()]) 
     image = FileField("Image") 
     submit = SubmitField('Post')
+    role = SelectField('Role',choices=[("Administrator","Administrator"),("User","User")])
+    age = IntegerField('Age')
 
 class BlogForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
     content = TextAreaField('Blog', validators=[DataRequired()])
     tag = StringField('Tag', validators=[DataRequired()])
     submit = SubmitField('Blog')
+
+class QuestionForm(FlaskForm):
+    subject = StringField('Subject', validators=[DataRequired()])
+    content = TextAreaField('Question', validators=[DataRequired()])
+    submit = SubmitField('Question')
 
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])

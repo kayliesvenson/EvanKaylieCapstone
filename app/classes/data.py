@@ -33,12 +33,26 @@ class User(UserMixin, Document):
     email = EmailField()
     image = FileField()
     prononuns = StringField()
+    role = StringField()
+    age = StringField()
 
     meta = {
         'ordering': ['lname','fname']
     }
 
 class Blog(Document):
+    author = ReferenceField('User',reverse_delete_rule=CASCADE) 
+    subject = StringField()
+    content = StringField()
+    tag = StringField()
+    create_date = DateTimeField(default=dt.datetime.utcnow)
+    modify_date = DateTimeField()
+
+    meta = {
+        'ordering': ['-createdate']
+    }
+
+class Question(Document):
     author = ReferenceField('User',reverse_delete_rule=CASCADE) 
     subject = StringField()
     content = StringField()
