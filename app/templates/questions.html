@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-4">
+        <h1 class="display-1">All Questions</h1>
+    </div>
+    <div class="col">
+        <a href="/question/new" class="btn btn-primary btn-sm mt-5" role="button">New Question</a>
+    </div>
+</div>
+
+{% if questions %}
+    {% for question in questions %}
+        <div class="row border-bottom">
+            <div class="col-2">
+                {% if loop.index == 1 %}
+                <h3 class="display-5">Date</h3>
+                {% endif %}
+
+                <a href="/question/{{question.id}}">
+                    {{moment(question.create_date).calendar()}}
+                </a>
+            </div>
+            <div class="col-2">
+                {% if loop.index == 1 %}
+                <h3 class="display-5">User</h3>
+                {% endif %}
+                {{question.author.fname}} {{question.author.lname}}
+            </div>
+            <div class="col">
+                {% if loop.index == 1 %}
+                    <h3 class="display-5">Subject</h3>
+                {% endif %}
+                {{question.subject}}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h1>No Questions</h1>
+{% endif %}
+
+{% endblock %}
