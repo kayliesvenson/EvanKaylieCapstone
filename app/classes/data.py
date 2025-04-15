@@ -34,7 +34,7 @@ class User(UserMixin, Document):
     image = FileField()
     prononuns = StringField()
     role = StringField()
-    age = StringField()
+    age = IntField()
 
     meta = {
         'ordering': ['lname','fname']
@@ -56,7 +56,6 @@ class Question(Document):
     author = ReferenceField('User',reverse_delete_rule=CASCADE) 
     subject = StringField()
     content = StringField()
-    tag = StringField()
     create_date = DateTimeField(default=dt.datetime.utcnow)
     modify_date = DateTimeField()
 

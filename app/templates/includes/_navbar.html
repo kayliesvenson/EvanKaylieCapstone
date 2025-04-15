@@ -10,16 +10,29 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Other Resources
-          </a>
-          <ul class="dropdown-menu" style="background-color:#579e75">
-            <li><a class="dropdown-item" href="">Database</a></li>
-            <li><a class="dropdown-item" href="">Questions Forum</a></li>
-          </ul>
+          <a class="nav-link active" aria-current="page" href="/question/list">Questions Forum</a>
         </li>
         <li class="nav-item"></li>
           <a class="nav-link active" aria-current="page" href="/aboutus">About Us</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if current_user.is_anonymous %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/myprofile">
+              {{ current_user.gname }} 
+            </a>
+            
+          </li>          
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          </li>
+          {% endif %}
         </li>
       </ul>
     </div>

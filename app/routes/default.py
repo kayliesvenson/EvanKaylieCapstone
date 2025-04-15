@@ -9,7 +9,3 @@ def index():
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.html')
-
-@app.route('/navbar')
-def navbar():
-    return render_template('navbar.html')
