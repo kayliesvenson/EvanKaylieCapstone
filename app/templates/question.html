@@ -21,7 +21,7 @@
         </a>
     {% endif %}
     <br>
-    <h1 class="display-5" style="font-family:Georgia, 'Times New Roman', Times, serif; color:#30436c">{{question.name}}</h1>
+    <h1 class="display-5" style="font-family:Georgia, 'Times New Roman', Times, serif; color:#30436c">{{question.subject}}</h1>
     <br>
     <h1 class="display-5" style="font-family:Georgia, 'Times New Roman', Times, serif; color:#30436c"> Subject: {{question.subject}}</h1>
     <br>
@@ -32,7 +32,7 @@
     <br><br>
 
     {% set data = namespace(l_bool=false) %}
-    {% set list = namespace(replyList=replies|list) %}
+    {% set list = namespace(replyL ist=replies|list) %}
 
     {% if list.replyList|length != 0 %}
     
