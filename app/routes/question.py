@@ -2,18 +2,17 @@ from app import app
 import mongoengine.errors
 from flask import render_template, flash, redirect, url_for
 from flask_login import current_user
-from app.classes.data import Question, Comment, Reply
-from app.classes.forms import QuestionForm, CommentForm, ReplyForm
+from app.classes.data import Question, Reply
+from app.classes.forms import QuestionForm, ReplyForm
 from flask_login import login_required
 import datetime as dt
 from mongoengine.queryset.visitor import Q
-
 
 @app.route('/question/new', methods=['GET', 'POST'])
 @login_required
 def questionNew():
     form = QuestionForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): 
         newQuestion = Question(
             subject = form.subject.data,
             content = form.content.data,
@@ -24,14 +23,18 @@ def questionNew():
 
         return redirect(url_for('question',questionID=newQuestion.id))
 
-    return render_template('questionform.html',form=form)
+    return render_template('questionsform.html',form=form)
 
-app.route('/question/list')
+@app.route('/question/list')
 @app.route('/questions')
 @login_required
 def questionList():
     questions = Question.objects()
     return render_template('questions.html',questions=questions)
+
+
+
+
 
 @app.route('/question/<questionID>')
 @login_required
@@ -39,7 +42,6 @@ def question(questionID):
     thisQuestion = Question.objects.get(id=questionID)
     theseReplies = Reply.objects(Q(question=thisQuestion) & Q(outer=True) & Q(dFromOuter=0))
     return render_template('question.html',question=thisQuestion, replies=theseReplies)
-
 
 @app.route('/question/edit/<questionID>', methods=['GET', 'POST'])
 @login_required
@@ -57,11 +59,11 @@ def questionEdit(questionID):
         )
         theseReplies = Reply.objects(Q(question=editQuestion) & Q(outer=True) & Q(dFromOuter=0))
         return redirect(url_for('question',questionID=questionID, replies=theseReplies))
-
+    
     form.subject.data = editQuestion.subject
-    form.content.data = editQuestion.content
+    form.content.data = editQuestion.text
 
-    return render_template('questionform.html',form=form)
+    return render_template('questionsform.html',form=form)
 
 @app.route('/question/delete/<questionID>')
 @login_required
@@ -84,7 +86,7 @@ def replyNewQuestion(questionID):
         newReply = Reply(
             author = current_user.id,
             question = questionID,
-            content = form.content.data,
+            text = form.text.data,
             dFromOuter = 0,
             outer = True
         )
@@ -103,7 +105,7 @@ def replyNewRep(questionID, replyID):
         newReply = Reply(
             author = current_user.id,
             question = questionID,
-            content = form.content.data,
+            text = form.text.data,
             dFromOuter = reply.dFromOuter+1,
             outer = False
         )
