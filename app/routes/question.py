@@ -40,6 +40,7 @@ def question(questionID):
     theseReplies = Reply.objects(Q(question=thisQuestion) & Q(outer=True) & Q(dFromOuter=0))
     return render_template('question.html',question=thisQuestion, replies=theseReplies)
 
+
 @app.route('/question/edit/<questionID>', methods=['GET', 'POST'])
 @login_required
 def questionEdit(questionID):
