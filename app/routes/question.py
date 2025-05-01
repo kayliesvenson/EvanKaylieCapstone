@@ -26,18 +26,19 @@ def questionNew():
 
     return render_template('questionform.html',form=form)
 
+app.route('/question/list')
+@app.route('/questions')
+@login_required
+def questionList():
+    questions = Question.objects()
+    return render_template('questions.html',questions=questions)
+
 @app.route('/question/<questionID>')
 @login_required
 def question(questionID):
     thisQuestion = Question.objects.get(id=questionID)
     theseReplies = Reply.objects(Q(question=thisQuestion) & Q(outer=True) & Q(dFromOuter=0))
     return render_template('question.html',question=thisQuestion, replies=theseReplies)
-
-@app.route('/question/list')
-@login_required
-def questionList():
-    questions = Question.objects()
-    return render_template('questions.html',questions=questions)
 
 @app.route('/question/edit/<questionID>', methods=['GET', 'POST'])
 @login_required
@@ -53,10 +54,12 @@ def questionEdit(questionID):
             content = form.content.data,
             modify_date = dt.datetime.utcnow
         )
-        return redirect(url_for('question',questionID=questionID))
-    
+        theseReplies = Reply.objects(Q(question=editQuestion) & Q(outer=True) & Q(dFromOuter=0))
+        return redirect(url_for('question',questionID=questionID, replies=theseReplies))
+
     form.subject.data = editQuestion.subject
     form.content.data = editQuestion.content
+
     return render_template('questionform.html',form=form)
 
 @app.route('/question/delete/<questionID>')
@@ -80,8 +83,7 @@ def replyNewQuestion(questionID):
         newReply = Reply(
             author = current_user.id,
             question = questionID,
-            text = form.text.data,
-            name = question.name,
+            content = form.content.data,
             dFromOuter = 0,
             outer = True
         )
@@ -100,8 +102,7 @@ def replyNewRep(questionID, replyID):
         newReply = Reply(
             author = current_user.id,
             question = questionID,
-            text = form.text.data,
-            name = question.name,
+            content = form.content.data,
             dFromOuter = reply.dFromOuter+1,
             outer = False
         )
