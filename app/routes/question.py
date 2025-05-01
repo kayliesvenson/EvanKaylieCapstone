@@ -30,7 +30,7 @@ def questionNew():
 @login_required
 def question(questionID):
     thisQuestion = Question.objects.get(id=questionID)
-    theseReplies = Reply.objects(question=thisQuestion)
+    theseReplies = Reply.objects(Q(question=thisQuestion) & Q(outer=True) & Q(dFromOuter=0))
     return render_template('question.html',question=thisQuestion, replies=theseReplies)
 
 @app.route('/question/list')
