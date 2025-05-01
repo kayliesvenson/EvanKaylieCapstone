@@ -30,8 +30,8 @@ def questionNew():
 @login_required
 def question(questionID):
     thisQuestion = Question.objects.get(id=questionID)
-    # theseComments = Comment.objects(question=thisQuestion)
-    return render_template('question.html',question=thisQuestion)
+    theseReplies = Reply.objects(question=thisQuestion)
+    return render_template('question.html',question=thisQuestion, replies=theseReplies)
 
 @app.route('/question/list')
 @login_required
