@@ -15,13 +15,7 @@
 
         <form method=post>
             {{ form.hidden_tag() }}
-            <p style="font-family:Georgia, 'Times New Roman', Times, serif; color:#4b4691; font-size:x-large">
-                {{ form.name.label }} <br>
-                {{ form.name() }}
-                {% for error in form.name.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
+            
             <p style="font-family:Georgia, 'Times New Roman', Times, serif; color:#4b4691; font-size:x-large">
                 {{ form.subject.label }} <br>
                 {{ form.subject() }}
@@ -31,8 +25,8 @@
             </p>
             <p style="font-family:Georgia, 'Times New Roman', Times, serif; color:#4b4691; font-size:x-large">
                 Write your question... <br>
-                {{ form.text(cols=64, rows=10) }}
-                {% for error in form.text.errors %}
+                {{ form.content(cols=64, rows=10) }}
+                {% for error in form.content.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
