@@ -31,15 +31,6 @@ class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Comment')
 
-class ClinicForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    streetAddress = StringField('Address', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
-    state = StringField('State', validators=[DataRequired()])
-    zipcode = StringField('Zipcode',validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
 class ReplyForm(FlaskForm):
     text = TextAreaField('Reply', validators=[DataRequired()])
     submit = SubmitField('Post')
